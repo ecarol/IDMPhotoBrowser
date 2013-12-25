@@ -22,10 +22,8 @@
 		4C6F97D814AF760500F8389A /* photo3m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F97D014AF760500F8389A /* photo3m.jpg */; };
 		4C6F97D914AF760500F8389A /* photo4l.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F97D114AF760500F8389A /* photo4l.jpg */; };
 		4C6F97DA14AF760500F8389A /* photo4m.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F97D214AF760500F8389A /* photo4m.jpg */; };
+		502FD740AE224E03996938E1 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30954521B8774DAF9A94820C /* libPods.a */; };
 		D150526F16F7ADD5002BBD4F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D150526E16F7ADD5002BBD4F /* Default-568h@2x.png */; };
-		D1574965178DB94900B0211A /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1574949178DB94900B0211A /* DACircularProgressView.m */; };
-		D1574966178DB94900B0211A /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D157494B178DB94900B0211A /* SVProgressHUD.bundle */; };
-		D1574967178DB94900B0211A /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D157494D178DB94900B0211A /* SVProgressHUD.m */; };
 		D1574968178DB94900B0211A /* IDMCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = D157494F178DB94900B0211A /* IDMCaptionView.m */; };
 		D1574969178DB94900B0211A /* IDMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = D1574951178DB94900B0211A /* IDMPhoto.m */; };
 		D157496A178DB94900B0211A /* IDMPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D1574952178DB94900B0211A /* IDMPhotoBrowser.bundle */; };
@@ -46,10 +44,6 @@
 		D19D826717E8D40700A5859E /* IDMPhotoBrowser_customArrowRightSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D19D825D17E8D40700A5859E /* IDMPhotoBrowser_customArrowRightSelected@2x.png */; };
 		D19D826817E8D40700A5859E /* IDMPhotoBrowser_customDoneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D19D825E17E8D40700A5859E /* IDMPhotoBrowser_customDoneButton.png */; };
 		D19D826917E8D40700A5859E /* IDMPhotoBrowser_customDoneButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D19D825F17E8D40700A5859E /* IDMPhotoBrowser_customDoneButton@2x.png */; };
-		D19D827417E8DDEC00A5859E /* DCCrossHairView.m in Sources */ = {isa = PBXBuildFile; fileRef = D19D826C17E8DDEC00A5859E /* DCCrossHairView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D19D827517E8DDEC00A5859E /* DCFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = D19D826E17E8DDEC00A5859E /* DCFrameView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D19D827617E8DDEC00A5859E /* DCIntrospect.m in Sources */ = {isa = PBXBuildFile; fileRef = D19D827017E8DDEC00A5859E /* DCIntrospect.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		D19D827717E8DDEC00A5859E /* DCStatusBarOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = D19D827317E8DDEC00A5859E /* DCStatusBarOverlay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D1A193581758F37B00CE615F /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A193561758F37B00CE615F /* libz.1.2.5.dylib */; };
 		D1A193591758F37B00CE615F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A193571758F37B00CE615F /* libz.dylib */; };
 		D1A1935B1758F42300CE615F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A1935A1758F42300CE615F /* SystemConfiguration.framework */; };
@@ -60,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30954521B8774DAF9A94820C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6F978D14AF734900F8389A /* PhotoBrowserDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBrowserDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6F979114AF734900F8389A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4C6F979314AF734900F8389A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -80,13 +75,9 @@
 		4C6F97D014AF760500F8389A /* photo3m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo3m.jpg; path = Photos/photo3m.jpg; sourceTree = "<group>"; };
 		4C6F97D114AF760500F8389A /* photo4l.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo4l.jpg; path = Photos/photo4l.jpg; sourceTree = "<group>"; };
 		4C6F97D214AF760500F8389A /* photo4m.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = photo4m.jpg; path = Photos/photo4m.jpg; sourceTree = "<group>"; };
+		9E083157A36B416EACD81DD2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D11464B61802FFC4005B7BC3 /* IDMPBConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDMPBConstants.h; sourceTree = "<group>"; };
 		D150526E16F7ADD5002BBD4F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
-		D1574948178DB94900B0211A /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
-		D1574949178DB94900B0211A /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
-		D157494B178DB94900B0211A /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		D157494C178DB94900B0211A /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		D157494D178DB94900B0211A /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		D157494E178DB94900B0211A /* IDMCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDMCaptionView.h; sourceTree = "<group>"; };
 		D157494F178DB94900B0211A /* IDMCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDMCaptionView.m; sourceTree = "<group>"; };
 		D1574950178DB94900B0211A /* IDMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDMPhoto.h; sourceTree = "<group>"; };
@@ -114,15 +105,6 @@
 		D19D825D17E8D40700A5859E /* IDMPhotoBrowser_customArrowRightSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IDMPhotoBrowser_customArrowRightSelected@2x.png"; sourceTree = "<group>"; };
 		D19D825E17E8D40700A5859E /* IDMPhotoBrowser_customDoneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IDMPhotoBrowser_customDoneButton.png; sourceTree = "<group>"; };
 		D19D825F17E8D40700A5859E /* IDMPhotoBrowser_customDoneButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IDMPhotoBrowser_customDoneButton@2x.png"; sourceTree = "<group>"; };
-		D19D826B17E8DDEC00A5859E /* DCCrossHairView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCrossHairView.h; sourceTree = "<group>"; };
-		D19D826C17E8DDEC00A5859E /* DCCrossHairView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCrossHairView.m; sourceTree = "<group>"; };
-		D19D826D17E8DDEC00A5859E /* DCFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFrameView.h; sourceTree = "<group>"; };
-		D19D826E17E8DDEC00A5859E /* DCFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFrameView.m; sourceTree = "<group>"; };
-		D19D826F17E8DDEC00A5859E /* DCIntrospect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospect.h; sourceTree = "<group>"; };
-		D19D827017E8DDEC00A5859E /* DCIntrospect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCIntrospect.m; sourceTree = "<group>"; };
-		D19D827117E8DDEC00A5859E /* DCIntrospectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIntrospectSettings.h; sourceTree = "<group>"; };
-		D19D827217E8DDEC00A5859E /* DCStatusBarOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCStatusBarOverlay.h; sourceTree = "<group>"; };
-		D19D827317E8DDEC00A5859E /* DCStatusBarOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCStatusBarOverlay.m; sourceTree = "<group>"; };
 		D1A193561758F37B00CE615F /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		D1A193571758F37B00CE615F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		D1A1935A1758F42300CE615F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -149,6 +131,7 @@
 				4C6F979214AF734900F8389A /* UIKit.framework in Frameworks */,
 				4C6F979414AF734900F8389A /* Foundation.framework in Frameworks */,
 				4C6F979614AF734900F8389A /* CoreGraphics.framework in Frameworks */,
+				502FD740AE224E03996938E1 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +147,7 @@
 				4C6F979814AF734900F8389A /* Supporting Files */,
 				4C6F979014AF734900F8389A /* Frameworks */,
 				4C6F978E14AF734900F8389A /* Products */,
+				9E083157A36B416EACD81DD2 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +173,7 @@
 				D1B43D541721875F00D8B807 /* QuartzCore.framework */,
 				D1A1935A1758F42300CE615F /* SystemConfiguration.framework */,
 				4C6F979114AF734900F8389A /* UIKit.framework */,
+				30954521B8774DAF9A94820C /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -255,7 +240,6 @@
 		D1574931178DB94900B0211A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D1574932178DB94900B0211A /* ExternalLibraries */,
 				D157494E178DB94900B0211A /* IDMCaptionView.h */,
 				D157494F178DB94900B0211A /* IDMCaptionView.m */,
 				D11464B61802FFC4005B7BC3 /* IDMPBConstants.h */,
@@ -276,35 +260,6 @@
 			path = ../Classes;
 			sourceTree = "<group>";
 		};
-		D1574932178DB94900B0211A /* ExternalLibraries */ = {
-			isa = PBXGroup;
-			children = (
-				D1574947178DB94900B0211A /* DACircularProgress */,
-				D19D826A17E8DDEC00A5859E /* DCIntrospect */,
-				D157494A178DB94900B0211A /* SVProgressHUD */,
-			);
-			path = ExternalLibraries;
-			sourceTree = "<group>";
-		};
-		D1574947178DB94900B0211A /* DACircularProgress */ = {
-			isa = PBXGroup;
-			children = (
-				D1574948178DB94900B0211A /* DACircularProgressView.h */,
-				D1574949178DB94900B0211A /* DACircularProgressView.m */,
-			);
-			path = DACircularProgress;
-			sourceTree = "<group>";
-		};
-		D157494A178DB94900B0211A /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				D157494B178DB94900B0211A /* SVProgressHUD.bundle */,
-				D157494C178DB94900B0211A /* SVProgressHUD.h */,
-				D157494D178DB94900B0211A /* SVProgressHUD.m */,
-			);
-			path = SVProgressHUD;
-			sourceTree = "<group>";
-		};
 		D19D825517E8D40700A5859E /* CustomImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,22 +277,6 @@
 			path = CustomImages;
 			sourceTree = "<group>";
 		};
-		D19D826A17E8DDEC00A5859E /* DCIntrospect */ = {
-			isa = PBXGroup;
-			children = (
-				D19D826B17E8DDEC00A5859E /* DCCrossHairView.h */,
-				D19D826C17E8DDEC00A5859E /* DCCrossHairView.m */,
-				D19D826D17E8DDEC00A5859E /* DCFrameView.h */,
-				D19D826E17E8DDEC00A5859E /* DCFrameView.m */,
-				D19D826F17E8DDEC00A5859E /* DCIntrospect.h */,
-				D19D827017E8DDEC00A5859E /* DCIntrospect.m */,
-				D19D827117E8DDEC00A5859E /* DCIntrospectSettings.h */,
-				D19D827217E8DDEC00A5859E /* DCStatusBarOverlay.h */,
-				D19D827317E8DDEC00A5859E /* DCStatusBarOverlay.m */,
-			);
-			path = DCIntrospect;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -345,9 +284,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C6F97AE14AF734900F8389A /* Build configuration list for PBXNativeTarget "PhotoBrowserDemo" */;
 			buildPhases = (
+				1477ABE103564010AB238DED /* Check Pods Manifest.lock */,
 				4C6F978914AF734800F8389A /* Sources */,
 				4C6F978A14AF734800F8389A /* Frameworks */,
 				4C6F978B14AF734800F8389A /* Resources */,
+				D9C39BF0CEC945E5BD5467EE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -399,7 +340,6 @@
 				4C6F97D914AF760500F8389A /* photo4l.jpg in Resources */,
 				4C6F97DA14AF760500F8389A /* photo4m.jpg in Resources */,
 				D150526F16F7ADD5002BBD4F /* Default-568h@2x.png in Resources */,
-				D1574966178DB94900B0211A /* SVProgressHUD.bundle in Resources */,
 				D157496A178DB94900B0211A /* IDMPhotoBrowser.bundle in Resources */,
 				D1574971178DB95300B0211A /* README.markdown in Resources */,
 				D1574972178DB95300B0211A /* LICENSE.txt in Resources */,
@@ -419,6 +359,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1477ABE103564010AB238DED /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D9C39BF0CEC945E5BD5467EE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4C6F978914AF734800F8389A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -427,18 +400,12 @@
 				4C6F979E14AF734900F8389A /* main.m in Sources */,
 				4C6F97A214AF734900F8389A /* AppDelegate.m in Sources */,
 				4C6F97B314AF737E00F8389A /* Menu.m in Sources */,
-				D1574965178DB94900B0211A /* DACircularProgressView.m in Sources */,
-				D1574967178DB94900B0211A /* SVProgressHUD.m in Sources */,
 				D1574968178DB94900B0211A /* IDMCaptionView.m in Sources */,
 				D1574969178DB94900B0211A /* IDMPhoto.m in Sources */,
 				D157496B178DB94900B0211A /* IDMPhotoBrowser.m in Sources */,
 				D157496C178DB94900B0211A /* IDMTapDetectingImageView.m in Sources */,
 				D157496D178DB94900B0211A /* IDMTapDetectingView.m in Sources */,
 				D157496E178DB94900B0211A /* IDMZoomingScrollView.m in Sources */,
-				D19D827417E8DDEC00A5859E /* DCCrossHairView.m in Sources */,
-				D19D827517E8DDEC00A5859E /* DCFrameView.m in Sources */,
-				D19D827617E8DDEC00A5859E /* DCIntrospect.m in Sources */,
-				D19D827717E8DDEC00A5859E /* DCStatusBarOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +492,7 @@
 		};
 		4C6F97AF14AF734900F8389A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E083157A36B416EACD81DD2 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -542,6 +510,7 @@
 		};
 		4C6F97B014AF734900F8389A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9E083157A36B416EACD81DD2 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

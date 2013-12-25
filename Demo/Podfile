@@ -1,0 +1,6 @@
+platform :ios, '5.0'
+
+pod 'SVProgressHUD', '~> 1.0'
+pod 'ASIHTTPRequest', :git=>'https://github.com/stephenzl/asi-http-request'
+pod 'DCIntrospect-ARC', '~> 0.0.6'
+pod 'DACircularProgress', '~> 2.1.0'
