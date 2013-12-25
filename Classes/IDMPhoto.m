@@ -11,7 +11,7 @@
 #import <ASIHTTPRequest/ASIHTTPRequest.h>
 
 // Private
-@interface IDMPhoto () {
+@interface IDMPhoto () <ASIHTTPRequestDelegate, ASIProgressDelegate>{
     // Image Sources
     NSString *_photoPath;
 
@@ -21,6 +21,8 @@
     // Other
     NSString *_caption;
     BOOL _loadingInProgress;
+    
+    ASIHTTPRequest *_request;
 }
 
 // Properties
@@ -136,26 +138,13 @@ caption = _caption;
             // Load async from file
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
-            // Load async from web (using AFNetworking)
-//            NSURLRequest *request = [NSURLRequest requestWithURL:_photoURL];
             
-//            AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            op.responseSerializer = [AFImageResponseSerializer serializer];
-//
-//            [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                UIImage *image = responseObject;
-//                self.underlyingImage = image;
-//                [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) { }];
-//            
-//            [op setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-//                CGFloat progress = ((CGFloat)totalBytesRead)/((CGFloat)totalBytesExpectedToRead);
-//                if (self.progressUpdateBlock) {
-//                    self.progressUpdateBlock(progress);
-//                }
-//            }];
-//            
-//            [[NSOperationQueue mainQueue] addOperation:op];
+            _request = [ASIHTTPRequest requestWithURL:_photoURL];
+            _request.delegate = self;
+            _request.showAccurateProgress = YES;
+            _request.downloadProgressDelegate = self;
+            [[NSOperationQueue mainQueue] addOperation:_request];
+            
         } else {
             // Failed - no source
             self.underlyingImage = nil;
@@ -164,48 +153,42 @@ caption = _caption;
     }
 }
 
+#pragma mark - ASIProgressDelegate
+- (void)setProgress:(float)newProgress
+{
+    if (self.progressUpdateBlock) {
+        
+        self.progressUpdateBlock(newProgress);
+     }
+}
+
+#pragma mark - ASIHTTPRequestDelegate
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    UIImage *image = [UIImage imageWithData:request.responseData];
+    self.underlyingImage = image;
+    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    
+}
+
 // Release if we can get it again from path or url
 - (void)unloadUnderlyingImage {
     _loadingInProgress = NO;
-
+    
 	if (self.underlyingImage && (_photoPath || _photoURL)) {
 		self.underlyingImage = nil;
 	}
 }
 
-#pragma mark - Async Loading
-
-/*- (UIImage *)decodedImageWithImage:(UIImage *)image {
-    CGImageRef imageRef = image.CGImage;
-    // System only supports RGB, set explicitly and prevent context error
-    // if the downloaded image is not the supported format
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef context = CGBitmapContextCreate(NULL,
-                                                 CGImageGetWidth(imageRef),
-                                                 CGImageGetHeight(imageRef),
-                                                 8,
-                                                 // width * 4 will be enough because are in ARGB format, don't read from the image
-                                                 CGImageGetWidth(imageRef) * 4,
-                                                 colorSpace,
-                                                 // kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little
-                                                 // makes system don't need to do extra conversion when displayed.
-                                                 kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little);
-    CGColorSpaceRelease(colorSpace);
-    
-    if ( ! context) {
-        return nil;
-    }
-    
-    CGRect rect = (CGRect){CGPointZero, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)};
-    CGContextDrawImage(context, rect, imageRef);
-    CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);
-    CGContextRelease(context);
-    
-    UIImage *decompressedImage = [[UIImage alloc] initWithCGImage:decompressedImageRef];
-    CGImageRelease(decompressedImageRef);
-    return decompressedImage;
-}*/
+- (void)dealloc
+{
+    _request.delegate = nil;
+    _request.downloadProgressDelegate = nil;
+}
 
 - (UIImage *)decodedImageWithImage:(UIImage *)image {
     if (image.images)
