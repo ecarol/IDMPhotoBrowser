@@ -607,6 +607,7 @@
     // Update
     //[self reloadData];
     
+    [self hideControls];
 	// Super
     [super viewDidLoad];
 }
@@ -651,9 +652,9 @@
 
 #pragma mark - Status Bar
 
-/*- (BOOL)prefersStatusBarHidden {
+- (BOOL)prefersStatusBarHidden {
     return YES;
-}*/
+}
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return _useWhiteBackgroundColor ? 1 : 0;
@@ -1195,18 +1196,17 @@
     // Cancel any timers
     [self cancelControlHiding];
     
-    /*if (self.wantsFullScreenLayout) {
-        // Status Bar
-        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-            //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-            [UIView animateWithDuration:0.3 animations:^(void) {
-                [self setNeedsStatusBarAppearanceUpdate];
-            } completion:^(BOOL finished) {}];
-        }
-    }*/
+//    if (self.wantsFullScreenLayout) {
+//        // Status Bar
+//        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+//            //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+//            [UIView animateWithDuration:0.3 animations:^(void) {
+//                [self setNeedsStatusBarAppearanceUpdate];
+//            } completion:^(BOOL finished) {}];
+//        }
+//    }
     
-    [[UIApplication sharedApplication] setStatusBarHidden:hidden
-                                            withAnimation:(animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone)];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     
     // Captions
     NSMutableSet *captionViews = [[NSMutableSet alloc] initWithCapacity:_visiblePages.count];
