@@ -29,7 +29,6 @@
 	// Paging
     NSMutableSet *_visiblePages, *_recycledPages;
     NSUInteger _pageIndexBeforeRotation;
-    NSUInteger _currentPageIndex;
 	
     // Buttons
     UIButton *_doneButton;
@@ -129,6 +128,7 @@
 @synthesize actionsSheet = _actionsSheet, activityViewController = _activityViewController;
 @synthesize trackTintColor = _trackTintColor, progressTintColor = _progressTintColor;
 @synthesize delegate = _delegate;
+@synthesize currentPageIndex = _currentPageIndex;
 
 #pragma mark - NSObject
 
@@ -136,7 +136,6 @@
     if ((self = [super init])) {
         // Defaults
         self.hidesBottomBarWhenPushed = YES;
-        _currentPageIndex = 0;
 		_performingLayout = NO; // Reset on view did appear
 		_rotating = NO;
         _viewIsActive = NO;
@@ -1228,7 +1227,6 @@
     // Change page
 	if (index < [self numberOfPhotos]) {
         
-        _currentPageIndex = index;
 		CGRect pageFrame = [self frameForPageAtIndex:index];
 
 		if(_arrowButtonsChangePhotosAnimated)
