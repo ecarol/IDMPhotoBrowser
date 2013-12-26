@@ -20,6 +20,7 @@
 - (void)photoBrowser:(IDMPhotoBrowser *)photoBrowser didDismissAtPageIndex:(NSUInteger)index;
 - (void)photoBrowser:(IDMPhotoBrowser *)photoBrowser didDismissActionSheetWithButtonIndex:(NSUInteger)buttonIndex photoIndex:(NSUInteger)photoIndex;
 - (IDMCaptionView *)photoBrowser:(IDMPhotoBrowser *)photoBrowser captionViewForPhotoAtIndex:(NSUInteger)index;
+
 @end
 
 // IDMPhotoBrowser
@@ -73,6 +74,8 @@
 
 // Get IDMPhoto at index
 - (id<IDMPhoto>)photoAtIndex:(NSUInteger)index;
+
+- (void)setToolbarItems;
 
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;

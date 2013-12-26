@@ -20,7 +20,9 @@
     
 	// Views
 	UIScrollView *_pagingScrollView;
-	
+	UIPageControl *_pageControl;
+    UILabel *_pageLabel;
+    
     // Gesture
     UIPanGestureRecognizer *_panGesture;
     
@@ -151,7 +153,7 @@
         _displayToolbar = YES;
         _displayActionButton = YES;
         _displayArrowButton = YES;
-        _displayCounterLabel = NO;
+        _displayCounterLabel = YES;
         
         _useWhiteBackgroundColor = NO;
         _leftArrowImage = _rightArrowImage = _leftArrowSelectedImage = _rightArrowSelectedImage = nil;
@@ -525,10 +527,22 @@
 	[self.view addSubview:_pagingScrollView];
     
     UIInterfaceOrientation currentOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    _pageControl = [[UIPageControl alloc] initWithFrame:[self frameForPageControlAtOrientation:currentOrientation]];
+    [_pageControl addTarget:self action:@selector(pageControlChanged:) forControlEvents:UIControlEventTouchUpInside];
+    _pageControl.hidesForSinglePage = YES;
+    [self.view addSubview:_pageControl];
+    
+    _pageLabel = [[UILabel alloc] initWithFrame:[self frameForPageControlAtOrientation:currentOrientation]];
+    _pageLabel.backgroundColor = [UIColor clearColor];
+    _pageLabel.textColor = [UIColor whiteColor];
+    _pageLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0f];
+    _pageLabel.textAlignment = NSTextAlignmentCenter;
+    _pageLabel.hidden = YES;
+    [self.view addSubview:_pageLabel];
 
     // Toolbar
     _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:currentOrientation]];
-    _toolbar.backgroundColor = [UIColor clearColor];
+    _toolbar.backgroundColor = [UIColor blackColor];
     _toolbar.clipsToBounds = YES;
     _toolbar.translucent = YES;
     [_toolbar setBackgroundImage:[UIImage new]
@@ -699,6 +713,8 @@
     // Toolbar
     _toolbar.frame = [self frameForToolbarAtOrientation:currentOrientation];
     
+    _pageControl.frame = [self frameForPageControlAtOrientation:currentOrientation];
+    
     // Done button
     _doneButton.frame = [self frameForDoneButtonAtOrientation:currentOrientation];
 
@@ -738,7 +754,6 @@
 - (void)performLayout {
     // Setup
     _performingLayout = YES;
-    NSUInteger numberOfPhotos = [self numberOfPhotos];
     
 	// Setup pages
     [_visiblePages removeAllObjects];
@@ -755,36 +770,10 @@
     if(_displayDoneButton && !self.navigationController.navigationBar)
         [self.view addSubview:_doneButton];
     
-    // Toolbar items & navigation
-    UIBarButtonItem *fixedLeftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                                                                    target:self action:nil];
-    fixedLeftSpace.width = 32; // To balance action button
-    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                               target:self action:nil];
-    NSMutableArray *items = [NSMutableArray new];
-    
-    if (_displayActionButton)
-        [items addObject:fixedLeftSpace];
-    [items addObject:flexSpace];
-    
-    if (numberOfPhotos > 1 && _displayArrowButton)
-        [items addObject:_previousButton];
-    
-    if(_displayCounterLabel) {
-        [items addObject:flexSpace];
-        [items addObject:_counterButton];
-    }
-    
-    [items addObject:flexSpace];
-    if (numberOfPhotos > 1 && _displayArrowButton)
-        [items addObject:_nextButton];
-    [items addObject:flexSpace];
-    
-    if(_displayActionButton)
-        [items addObject:_actionButton];
-    
-    [_toolbar setItems:items];
+    [self setToolbarItems];
 	[self updateToolbar];
+    
+    [self updatePageControl];
     
     // Content offset
 	_pagingScrollView.contentOffset = [self contentOffsetForPageAtIndex:_currentPageIndex];
@@ -1051,6 +1040,8 @@
     if ([_delegate respondsToSelector:@selector(photoBrowser:didShowPhotoAtIndex:)]) {
         [_delegate photoBrowser:self didShowPhotoAtIndex:index];
     }
+    
+    [self showControlsAfterDelay];
 }
 
 #pragma mark - Frame Calculations
@@ -1100,6 +1091,12 @@
     return CGRectMake(0, self.view.bounds.size.height - height, self.view.bounds.size.width, height);
 }
 
+- (CGRect)frameForPageControlAtOrientation:(UIInterfaceOrientation)orientation {
+    
+    CGFloat height = 40.0f;
+    return CGRectMake(0, self.view.bounds.size.height - height, self.view.bounds.size.width, height);
+}
+
 - (CGRect)frameForDoneButtonAtOrientation:(UIInterfaceOrientation)orientation {
     CGRect screenBound = self.view.bounds;
     CGFloat screenWidth = screenBound.size.width;
@@ -1135,7 +1132,10 @@
     NSUInteger previousCurrentPage = _currentPageIndex;
     _currentPageIndex = index;
     if (_currentPageIndex != previousCurrentPage) {
+        
         [self didStartViewingPageAtIndex:index];
+        [self updatePageControl];
+        
         
         if(_arrowButtonsChangePhotosAnimated) [self updateToolbar];
     }
@@ -1149,6 +1149,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 	// Update toolbar when page changes
 	if(! _arrowButtonsChangePhotosAnimated) [self updateToolbar];
+    [self showControlsAfterDelay];
 }
 
 #pragma mark - Toolbar
@@ -1164,6 +1165,63 @@
 	// Buttons
 	_previousButton.enabled = (_currentPageIndex > 0);
 	_nextButton.enabled = (_currentPageIndex < [self numberOfPhotos]-1);
+}
+
+- (void)setToolbarItems
+{
+    NSUInteger numberOfPhotos = [self numberOfPhotos];
+    // Toolbar items & navigation
+    UIBarButtonItem *fixedLeftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                    target:self action:nil];
+    fixedLeftSpace.width = 32; // To balance action button
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                               target:self action:nil];
+    NSMutableArray *items = [NSMutableArray new];
+    
+    if (_displayActionButton)
+        [items addObject:fixedLeftSpace];
+    [items addObject:flexSpace];
+    
+    if (numberOfPhotos > 1 && _displayArrowButton)
+        [items addObject:_previousButton];
+    
+    if(_displayCounterLabel) {
+        [items addObject:flexSpace];
+        [items addObject:_counterButton];
+    }
+    
+    [items addObject:flexSpace];
+    if (numberOfPhotos > 1 && _displayArrowButton)
+        [items addObject:_nextButton];
+    [items addObject:flexSpace];
+    
+    if(_displayActionButton)
+        [items addObject:_actionButton];
+    
+    [_toolbar setItems:items];
+}
+
+- (void)updatePageControl
+{
+    int count = [self numberOfPhotos];
+    if (count > 8) {
+        
+        _pageControl.hidden = YES;
+        _pageLabel.text = [NSString stringWithFormat:@"%d / %d", _currentPageIndex + 1, count];
+        
+    } else {
+        
+        _pageControl.hidden = NO;
+        _pageControl.numberOfPages = count;
+        _pageControl.currentPage = _currentPageIndex;
+    }
+    
+    _pageLabel.hidden = !_pageControl.hidden;
+}
+
+- (void)pageControlChanged:(UIPageControl *)pageControl
+{
+    [self jumpToPageAtIndex:pageControl.currentPage];
 }
 
 - (void)jumpToPageAtIndex:(NSUInteger)index {
@@ -1238,7 +1296,8 @@
 
 // Enable/disable control visiblity timer
 - (void)hideControlsAfterDelay {
-	// return;
+    
+	return; // 不自动隐藏
     
     if (![self areControlsHidden]) {
         [self cancelControlHiding];
@@ -1246,9 +1305,18 @@
 	}
 }
 
+- (void)showControlsAfterDelay {
+    
+    if ([self areControlsHidden]) {
+        
+		_controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:1.5f target:self selector:@selector(showControls) userInfo:nil repeats:NO];
+	}
+}
+
 - (BOOL)areControlsHidden { return (_toolbar.alpha == 0); }
 - (void)hideControls      { if(_autoHide) [self setControlsHidden:YES animated:YES permanent:NO]; }
-- (void)toggleControls    { [self setControlsHidden:![self areControlsHidden] animated:YES permanent:NO]; }
+- (void)showControls      { [self setControlsHidden:NO animated:YES permanent:NO]; }
+- (void)toggleControls    { [self setControlsHidden:![self areControlsHidden] animated:YES permanent:NO]; [self showControlsAfterDelay];}
 
 
 #pragma mark - Properties
