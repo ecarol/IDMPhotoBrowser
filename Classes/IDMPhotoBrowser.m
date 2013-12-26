@@ -1318,6 +1318,10 @@
 - (void)showControls      { [self setControlsHidden:NO animated:YES permanent:NO]; }
 - (void)toggleControls    { [self setControlsHidden:![self areControlsHidden] animated:YES permanent:NO]; [self showControlsAfterDelay];}
 
+- (void)handleSingleTap:(CGPoint)touchPoint
+{
+    [self toggleControls];
+}
 
 #pragma mark - Properties
 

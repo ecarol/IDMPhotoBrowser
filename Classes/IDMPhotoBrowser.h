@@ -77,6 +77,8 @@
 
 - (void)setToolbarItems;
 
+- (void)handleSingleTap:(CGPoint)touchPoint;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 
