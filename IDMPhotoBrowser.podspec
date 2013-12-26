@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.source_files  =  'Classes/*.{h,m}'
   s.resources     =  'Classes/IDMPhotoBrowser.bundle'
   s.framework     =  'MessageUI', 'QuartzCore', 'SystemConfiguration', 'MobileCoreServices', 'Security'
-  s.dependency       'ASIHTTPRequest', :git => 'https://github.com/stephenzl/asi-http-request'
+  s.dependency       'ASIHTTPRequest', '~> 1.8.1'
   s.dependency       'DACircularProgress', '~> 2.1.0'
   s.dependency       'SVProgressHUD', '~> 1.0'
 end
