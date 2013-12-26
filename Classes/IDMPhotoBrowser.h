@@ -79,7 +79,7 @@
 
 - (void)handleSingleTap:(CGPoint)touchPoint;
 
-- (void)dismissPhotoBrowserAnimated:(BOOL)animated;
+- (void)dismissPhotoBrowser;
 
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;

@@ -1339,6 +1339,12 @@
 #pragma mark - Buttons
 
 - (void)doneButtonPressed:(id)sender {
+    
+    [self dismissPhotoBrowser];
+}
+
+- (void)dismissPhotoBrowser
+{
     if (_senderViewForAnimation && _currentPageIndex == _initalPageIndex) {
         IDMZoomingScrollView *scrollView = [self pageDisplayedAtIndex:_currentPageIndex];
         [self performCloseAnimationWithScrollView:scrollView];
