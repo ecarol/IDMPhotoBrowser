@@ -8,10 +8,10 @@
 
 #import "IDMPhoto.h"
 #import "IDMPhotoBrowser.h"
-#import <ASIHTTPRequest/ASIHTTPRequest.h>
+#import "SDWebImage/SDWebImageManager.h"
 
 // Private
-@interface IDMPhoto () <ASIHTTPRequestDelegate, ASIProgressDelegate>{
+@interface IDMPhoto () {
     // Image Sources
     NSString *_photoPath;
 
@@ -21,8 +21,6 @@
     // Other
     NSString *_caption;
     BOOL _loadingInProgress;
-    
-    ASIHTTPRequest *_request;
 }
 
 // Properties
@@ -139,11 +137,21 @@ caption = _caption;
             [self performSelectorInBackground:@selector(loadImageFromFileAsync) withObject:nil];
         } else if (_photoURL) {
             
-            _request = [ASIHTTPRequest requestWithURL:_photoURL];
-            _request.delegate = self;
-            _request.showAccurateProgress = YES;
-            _request.downloadProgressDelegate = self;
-            [[NSOperationQueue mainQueue] addOperation:_request];
+            [[SDWebImageManager sharedManager] downloadWithURL:_photoURL
+                                                       options:SDWebImageRetryFailed
+                                                      progress:^(NSUInteger receivedSize, long long expectedSize) {
+                
+                float progress = receivedSize / (expectedSize + 0.0f);
+                if (self.progressUpdateBlock) {
+                    
+                    self.progressUpdateBlock(progress);
+                }
+                
+            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                
+                self.underlyingImage = image;
+                [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
+            }];
             
         } else {
             // Failed - no source
@@ -153,28 +161,6 @@ caption = _caption;
     }
 }
 
-#pragma mark - ASIProgressDelegate
-- (void)setProgress:(float)newProgress
-{
-    if (self.progressUpdateBlock) {
-        
-        self.progressUpdateBlock(newProgress);
-     }
-}
-
-#pragma mark - ASIHTTPRequestDelegate
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    UIImage *image = [UIImage imageWithData:request.responseData];
-    self.underlyingImage = image;
-    [self performSelectorOnMainThread:@selector(imageLoadingComplete) withObject:nil waitUntilDone:NO];
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    
-}
-
 // Release if we can get it again from path or url
 - (void)unloadUnderlyingImage {
     _loadingInProgress = NO;
@@ -182,12 +168,6 @@ caption = _caption;
 	if (self.underlyingImage && (_photoPath || _photoURL)) {
 		self.underlyingImage = nil;
 	}
-}
-
-- (void)dealloc
-{
-    _request.delegate = nil;
-    _request.downloadProgressDelegate = nil;
 }
 
 - (UIImage *)decodedImageWithImage:(UIImage *)image {
