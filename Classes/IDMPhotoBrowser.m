@@ -769,7 +769,7 @@
     if(_displayDoneButton && !self.navigationController.navigationBar)
         [self.view addSubview:_doneButton];
     
-    [self setToolbarItems];
+    _toolbar.items = [self itemsForToolbar];
 	[self updateToolbar];
     
     [self updatePageControl];
@@ -1166,7 +1166,7 @@
 	_nextButton.enabled = (_currentPageIndex < [self numberOfPhotos]-1);
 }
 
-- (void)setToolbarItems
+- (NSArray *)itemsForToolbar
 {
     NSUInteger numberOfPhotos = [self numberOfPhotos];
     // Toolbar items & navigation
@@ -1197,7 +1197,7 @@
     if(_displayActionButton)
         [items addObject:_actionButton];
     
-    [_toolbar setItems:items];
+    return items;
 }
 
 - (void)updatePageControl

@@ -77,7 +77,7 @@
 // Get IDMPhoto at index
 - (id<IDMPhoto>)photoAtIndex:(NSUInteger)index;
 
-- (void)setToolbarItems;
+- (NSArray *)itemsForToolbar;
 
 - (void)handleSingleTap:(CGPoint)touchPoint;
 
