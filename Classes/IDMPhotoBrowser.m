@@ -1227,6 +1227,8 @@
 - (void)jumpToPageAtIndex:(NSUInteger)index {
     // Change page
 	if (index < [self numberOfPhotos]) {
+        
+        _currentPageIndex = index;
 		CGRect pageFrame = [self frameForPageAtIndex:index];
 
 		if(_arrowButtonsChangePhotosAnimated)

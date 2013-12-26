@@ -54,6 +54,8 @@
 // animation time defult .28
 @property (nonatomic) float animationDuration;
 
+@property(nonatomic, readonly) int currentPageIndex;
+
 // Init
 - (id)initWithPhotos:(NSArray *)photosArray;
 
