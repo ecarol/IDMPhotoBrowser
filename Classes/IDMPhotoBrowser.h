@@ -83,6 +83,9 @@
 
 - (void)dismissPhotoBrowser;
 
+// Toolbar
+- (void)updateToolbar;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 
