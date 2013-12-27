@@ -87,6 +87,8 @@
 
 - (void)updateToolbar;
 
+- (void)updatePageControl;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 

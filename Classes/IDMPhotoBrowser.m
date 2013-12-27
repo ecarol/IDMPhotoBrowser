@@ -766,7 +766,9 @@
     if(_displayDoneButton && !self.navigationController.navigationBar)
         [self.view addSubview:_doneButton];
     
-    _toolbar.items = [self itemsForToolbar];
+    if (!_toolbar.items) {
+        _toolbar.items = [self itemsForToolbar];
+    }
 	[self updateToolbar];
     
     [self updatePageControl];
