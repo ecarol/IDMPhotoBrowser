@@ -83,6 +83,8 @@
 
 - (void)dismissPhotoBrowser;
 
+- (UIImage *)imageAtIndex:(NSUInteger)index;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 

@@ -874,6 +874,11 @@
     return captionView;
 }
 
+- (UIImage *)imageAtIndex:(NSUInteger)index {
+    
+    return [self imageForPhoto:[self photoAtIndex:_currentPageIndex]];
+}
+
 - (UIImage *)imageForPhoto:(id<IDMPhoto>)photo {
 	if (photo) {
 		// Get image or obtain in background
