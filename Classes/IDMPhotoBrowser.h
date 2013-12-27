@@ -85,6 +85,8 @@
 
 - (UIImage *)imageAtIndex:(NSUInteger)index;
 
+- (void)updateToolbar;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 
