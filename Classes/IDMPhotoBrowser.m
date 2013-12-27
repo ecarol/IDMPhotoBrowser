@@ -93,9 +93,6 @@
 - (CGRect)frameForDoneButtonAtOrientation:(UIInterfaceOrientation)orientation;
 - (CGRect)frameForCaptionView:(IDMCaptionView *)captionView atIndex:(NSUInteger)index;
 
-// Toolbar
-- (void)updateToolbar;
-
 // Navigation
 - (void)jumpToPageAtIndex:(NSUInteger)index;
 - (void)gotoPreviousPage;
