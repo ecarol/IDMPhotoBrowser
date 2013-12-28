@@ -22,6 +22,7 @@
 	UIScrollView *_pagingScrollView;
 	UIPageControl *_pageControl;
     UILabel *_pageLabel;
+    UIView *_currentPageView;
     
     // Gesture
     UIPanGestureRecognizer *_panGesture;
@@ -538,7 +539,7 @@
 
     // Toolbar
     _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:currentOrientation]];
-    _toolbar.backgroundColor = [UIColor blackColor];
+    _toolbar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
     _toolbar.clipsToBounds = YES;
     _toolbar.translucent = YES;
     [_toolbar setBackgroundImage:[UIImage new]
@@ -1210,11 +1211,13 @@
     if (count > 8) {
         
         _pageControl.hidden = YES;
+        _currentPageView = _pageLabel;
         _pageLabel.text = [NSString stringWithFormat:@"%d / %d", _currentPageIndex + 1, count];
         
     } else {
         
         _pageControl.hidden = NO;
+        _currentPageView = _pageControl;
         _pageControl.numberOfPages = count;
         _pageControl.currentPage = _currentPageIndex;
     }
@@ -1282,6 +1285,7 @@
         [self.navigationController.navigationBar setAlpha:alpha];
         [_toolbar setAlpha:alpha];
         [_doneButton setAlpha:alpha];
+        [_currentPageView setAlpha:1 - alpha];
         for (UIView *v in captionViews) v.alpha = alpha;
     } completion:^(BOOL finished) {}];
 	
