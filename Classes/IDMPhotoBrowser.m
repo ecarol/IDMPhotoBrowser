@@ -35,7 +35,6 @@
     UIButton *_doneButton;
     
 	// Toolbar
-	UIToolbar *_toolbar;
 	UIBarButtonItem *_previousButton, *_nextButton, *_actionButton;
     UIBarButtonItem *_counterButton;
     UILabel *_counterLabel;
