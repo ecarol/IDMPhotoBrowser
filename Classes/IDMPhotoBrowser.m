@@ -60,6 +60,7 @@
     NSInteger _initalPageIndex;
     
     CGRect _resizableImageViewFrame;
+    UIImageView *_placeholderImageView;
     //UIImage *_backgroundScreenshot;
     
     UIWindow *_applicationWindow;
@@ -358,12 +359,12 @@
     fadeView.backgroundColor = [UIColor clearColor];
     [_applicationWindow addSubview:fadeView];
     
-    UIImageView *resizableImageView = [[UIImageView alloc] initWithImage:imageFromView];
-    resizableImageView.frame = _resizableImageViewFrame;
-    resizableImageView.clipsToBounds = YES;
-    resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
-    resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
-    [_applicationWindow addSubview:resizableImageView];
+    _placeholderImageView = [[UIImageView alloc] initWithImage:imageFromView];
+    _placeholderImageView.frame = _resizableImageViewFrame;
+    _placeholderImageView.clipsToBounds = YES;
+    _placeholderImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _placeholderImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
+    [_applicationWindow addSubview:_placeholderImageView];
     _senderViewForAnimation.hidden = YES;
     
     [UIView animateWithDuration:_animationDuration animations:^{
@@ -374,12 +375,11 @@
 
         float scaleFactor = (imageFromView ? imageFromView.size.width : screenWidth) / screenWidth;
         
-        resizableImageView.frame = CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor);
+        _placeholderImageView.frame = CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor);
     } completion:^(BOOL finished) {
         self.view.alpha = 1.0f;
-        resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
+        _placeholderImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
         [fadeView removeFromSuperview];
-        [resizableImageView removeFromSuperview];
     }];
 }
 
@@ -920,11 +920,15 @@
 #pragma mark - IDMPhoto Loading Notification
 
 - (void)handleIDMPhotoLoadingDidEndNotification:(NSNotification *)notification {
+    
+    
     id <IDMPhoto> photo = [notification object];
     IDMZoomingScrollView *page = [self pageDisplayingPhoto:photo];
     if (page) {
         if ([photo underlyingImage]) {
             // Successful load
+            
+            [_placeholderImageView removeFromSuperview];
             [page displayImage];
             [self loadAdjacentPhotosIfNecessary:photo];
         } else {
