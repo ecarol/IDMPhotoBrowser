@@ -384,6 +384,8 @@
         IDMZoomingScrollView *page = [self pageDisplayedAtIndex:_currentPageIndex];
         IDMPhoto *photo = [IDMPhoto photoWithImage:imageFromView];
         page.photo = photo;
+        
+        [self configurePage:page forIndex:_currentPageIndex];
     }];
 }
 
