@@ -381,6 +381,10 @@
         [fadeView removeFromSuperview];
         [resizableImageView removeFromSuperview];
     }];
+    
+    IDMZoomingScrollView *page = [self pageDisplayedAtIndex:_currentPageIndex];
+    IDMPhoto *photo = [IDMPhoto photoWithImage:imageFromView];
+    page.photo = photo;
 }
 
 - (void)performCloseAnimationWithScrollView:(IDMZoomingScrollView*)scrollView {
