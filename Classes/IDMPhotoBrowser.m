@@ -60,6 +60,7 @@
     NSInteger _initalPageIndex;
     
     CGRect _resizableImageViewFrame;
+    UIImage *_placeholderImage;
     //UIImage *_backgroundScreenshot;
     
     UIWindow *_applicationWindow;
@@ -208,7 +209,7 @@
 - (id)initWithPhotoURLs:(NSArray *)photoURLsArray animatedFromView:(UIView*)view {
     if ((self = [self init])) {
         NSArray *photosArray = [IDMPhoto photosWithURLs:photoURLsArray];
-		_photos = [[NSMutableArray alloc] initWithArray:photosArray];        
+		_photos = [[NSMutableArray alloc] initWithArray:photosArray];
         _senderViewForAnimation = view;
 	}
 	return self;
@@ -268,8 +269,8 @@
     self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:newAlpha];
     
     /*UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:_backgroundScreenshot];
-    backgroundImageView.alpha = 1 - newAlpha;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[self getImageFromView:backgroundImageView]];*/
+     backgroundImageView.alpha = 1 - newAlpha;
+     self.view.backgroundColor = [UIColor colorWithPatternImage:[self getImageFromView:backgroundImageView]];*/
     
     // Gesture Ended
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
@@ -307,7 +308,7 @@
             self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:1];
             //self.view.backgroundColor = [UIColor colorWithPatternImage:[self getImageFromView:backgroundImageView]];
             
-            CGFloat velocityY = (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y); 
+            CGFloat velocityY = (.35*[(UIPanGestureRecognizer*)sender velocityInView:self.view].y);
             
             CGFloat finalX = firstX;
             CGFloat finalY = viewHalfHeight;
@@ -345,8 +346,8 @@
 - (void)performPresentAnimation {
     self.view.alpha = 0.0f;
     
-    UIImage *imageFromView = _scaleImage ? _scaleImage : [self getImageFromView:_senderViewForAnimation];
-    imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
+    _placeholderImage = _scaleImage ? _scaleImage : [self getImageFromView:_senderViewForAnimation];
+    _placeholderImage = [self rotateImageToCurrentOrientation:_placeholderImage];
     
     _resizableImageViewFrame = [_senderViewForAnimation.superview convertRect:_senderViewForAnimation.frame toView:nil];
     
@@ -358,7 +359,7 @@
     fadeView.backgroundColor = [UIColor clearColor];
     [_applicationWindow addSubview:fadeView];
     
-    UIImageView *resizableImageView = [[UIImageView alloc] initWithImage:imageFromView];
+    UIImageView *resizableImageView = [[UIImageView alloc] initWithImage:_placeholderImage];
     resizableImageView.frame = _resizableImageViewFrame;
     resizableImageView.clipsToBounds = YES;
     resizableImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -368,24 +369,18 @@
     
     [UIView animateWithDuration:_animationDuration animations:^{
         /*CGAffineTransform zoom = CGAffineTransformScale(CGAffineTransformIdentity, _backgroundScaleFactor, _backgroundScaleFactor);
-        [_applicationRootViewController.view setTransform:zoom];*/
+         [_applicationRootViewController.view setTransform:zoom];*/
         
         fadeView.backgroundColor = self.useWhiteBackgroundColor ? [UIColor whiteColor] : [UIColor blackColor];
-
-        float scaleFactor = (imageFromView ? imageFromView.size.width : screenWidth) / screenWidth;
         
-        resizableImageView.frame = CGRectMake(0, (screenHeight/2)-((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor);
+        float scaleFactor = (_placeholderImage ? _placeholderImage.size.width : screenWidth) / screenWidth;
+        
+        resizableImageView.frame = CGRectMake(0, (screenHeight/2)-((_placeholderImage.size.height / scaleFactor)/2), screenWidth, _placeholderImage.size.height / scaleFactor);
     } completion:^(BOOL finished) {
         self.view.alpha = 1.0f;
         resizableImageView.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor) ? 1 : 0 alpha:1];
         [fadeView removeFromSuperview];
         [resizableImageView removeFromSuperview];
-        
-        IDMZoomingScrollView *page = [self pageDisplayedAtIndex:_currentPageIndex];
-        IDMPhoto *photo = [IDMPhoto photoWithImage:imageFromView];
-        page.photo = photo;
-        
-        [self configurePage:page forIndex:_currentPageIndex];
     }];
 }
 
@@ -394,7 +389,7 @@
     
     UIImage *imageFromView = [scrollView.photo underlyingImage];
     //imageFromView = [self rotateImageToCurrentOrientation:imageFromView];
-
+    
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenBound.size.width;
     CGFloat screenHeight = screenBound.size.height;
@@ -438,17 +433,17 @@
 - (void)prepareForClosePhotoBrowser {
     // Status Bar
     /*if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-        //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-        [UIView animateWithDuration:0.3 animations:^(void) {
-            [self setNeedsStatusBarAppearanceUpdate];
-        } completion:^(BOOL finished) {}];
-    }*/
-
+     //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+     [UIView animateWithDuration:0.3 animations:^(void) {
+     [self setNeedsStatusBarAppearanceUpdate];
+     } completion:^(BOOL finished) {}];
+     }*/
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     /*if (self.wantsFullScreenLayout && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        [[UIApplication sharedApplication] setStatusBarStyle:_previousStatusBarStyle animated:YES];
-    }*/
+     [[UIApplication sharedApplication] setStatusBarStyle:_previousStatusBarStyle animated:YES];
+     }*/
     
     // Gesture
     [_applicationWindow removeGestureRecognizer:_panGesture];
@@ -489,12 +484,12 @@
 }
 
 /*- (UIImage*)takeScreenshot {
-    UIGraphicsBeginImageContext(_applicationWindow.bounds.size);
-    [window.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}*/
+ UIGraphicsBeginImageContext(_applicationWindow.bounds.size);
+ [window.layer renderInContext:UIGraphicsGetCurrentContext()];
+ UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+ UIGraphicsEndImageContext();
+ return image;
+ }*/
 
 #pragma mark - View Lifecycle
 
@@ -503,13 +498,13 @@
     [self performPresentAnimation];
     
     /*if(!_senderViewForAnimation) // Default presentation (withoung animation) {
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) // ios 7 or greater
-            [UIView animateWithDuration:0.0 animations:^{ } completion:^(BOOL finished) {
-                [UIView animateWithDuration:_animationDuration animations:^{ self.view.alpha = 1; }];
-            }];
-        else // ios 6 or less
-            [UIView animateWithDuration:_animationDuration animations:^{ self.view.alpha = 1; }];
-    }*/
+     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) // ios 7 or greater
+     [UIView animateWithDuration:0.0 animations:^{ } completion:^(BOOL finished) {
+     [UIView animateWithDuration:_animationDuration animations:^{ self.view.alpha = 1; }];
+     }];
+     else // ios 6 or less
+     [UIView animateWithDuration:_animationDuration animations:^{ self.view.alpha = 1; }];
+     }*/
     
     // View
 	self.view.backgroundColor = [UIColor colorWithWhite:(_useWhiteBackgroundColor ? 1 : 0) alpha:1];
@@ -541,7 +536,7 @@
     _pageLabel.textAlignment = NSTextAlignmentCenter;
     _pageLabel.hidden = YES;
     [self.view addSubview:_pageLabel];
-
+    
     // Toolbar
     _toolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:currentOrientation]];
     _toolbar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
@@ -639,9 +634,9 @@
     
     // Status Bar
     /*if (self.wantsFullScreenLayout && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        _previousStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:animated];
-    }*/
+     _previousStatusBarStyle = [[UIApplication sharedApplication] statusBarStyle];
+     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:animated];
+     }*/
     
     // Update UI
 	[self hideControlsAfterDelay];
@@ -677,8 +672,8 @@
 }
 
 /*- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
-    return UIStatusBarAnimationFade;
-}*/
+ return UIStatusBarAnimationFade;
+ }*/
 
 #pragma mark - Layout
 
@@ -688,30 +683,30 @@
 
 - (void)viewWillLayoutSubviews {
     //NSLog(@"viewWillLayoutSubviews IDMPB  |  statusBarOrientation = %d", [[UIApplication sharedApplication] statusBarOrientation]);
-
+    
 	// Flag
 	_performingLayout = YES;
     
     /*static BOOL isFirstViewLoad = YES;
-    if(isFirstViewLoad) {
-        // Toolbar
-        _toolbar.frame = [self frameForToolbarFirstTimeAtOrientation:self.interfaceOrientation];
-        
-        // Done button
-        _doneButton.frame = [self frameForDoneButtonFirstTimeAtOrientation:self.interfaceOrientation];
-
-        isFirstViewLoad = NO;
-    }
-    else {
+     if(isFirstViewLoad) {
      // Toolbar
-        _toolbar.frame = [self frameForToolbarAtOrientation:self.interfaceOrientation];
-        
-        // Done button
-        _doneButton.frame = [self frameForDoneButtonAtOrientation:self.interfaceOrientation];
-    }*/
+     _toolbar.frame = [self frameForToolbarFirstTimeAtOrientation:self.interfaceOrientation];
+     
+     // Done button
+     _doneButton.frame = [self frameForDoneButtonFirstTimeAtOrientation:self.interfaceOrientation];
+     
+     isFirstViewLoad = NO;
+     }
+     else {
+     // Toolbar
+     _toolbar.frame = [self frameForToolbarAtOrientation:self.interfaceOrientation];
+     
+     // Done button
+     _doneButton.frame = [self frameForDoneButtonAtOrientation:self.interfaceOrientation];
+     }*/
     
     UIInterfaceOrientation currentOrientation = [UIApplication sharedApplication].statusBarOrientation;
-
+    
     // Toolbar
     _toolbar.frame = [self frameForToolbarAtOrientation:currentOrientation];
     
@@ -719,7 +714,7 @@
     
     // Done button
     _doneButton.frame = [self frameForDoneButtonAtOrientation:currentOrientation];
-
+    
     
     // Remember index
 	NSUInteger indexPriorToLayout = _currentPageIndex;
@@ -803,23 +798,23 @@
 }
 
 /*- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight;
-    //return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
-}*/
+ {
+ return UIInterfaceOrientationPortrait | UIInterfaceOrientationLandscapeLeft | UIInterfaceOrientationLandscapeRight;
+ //return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+ }*/
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     //NSLog(@"IDMPB willRotateToInterfaceOrientation");
     //NSLog(@"before = %d  |  current = %d", _pageIndexBeforeRotation, _currentPageIndex);
-
+    
     // Remember page index before rotation
     _pageIndexBeforeRotation = _currentPageIndex;
 	_rotating = YES;
     
     /*if ([self areControlsHidden]) {
-        self.navigationController.navigationBarHidden = YES;
-    }*/
+     self.navigationController.navigationBarHidden = YES;
+     }*/
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -827,9 +822,9 @@
 	_rotating = NO;
     
     /*if ([self areControlsHidden]) {
-        self.navigationController.navigationBarHidden = NO;
-        self.navigationController.navigationBar.alpha = 0;
-    }*/
+     self.navigationController.navigationBarHidden = NO;
+     self.navigationController.navigationBar.alpha = 0;
+     }*/
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -875,7 +870,7 @@
         }
     }
     captionView.alpha = [self areControlsHidden] ? 0 : 1; // Initial alpha
-
+    
     return captionView;
 }
 
@@ -891,6 +886,9 @@
 			return [photo underlyingImage];
 		} else {
             [photo loadUnderlyingImageAndNotify];
+            UIImage *placeholder = _placeholderImage;
+            _placeholderImage = nil;
+            return placeholder;
 		}
 	}
     
@@ -1242,7 +1240,7 @@
 	if (index < [self numberOfPhotos]) {
         
 		CGRect pageFrame = [self frameForPageAtIndex:index];
-
+        
 		if(_arrowButtonsChangePhotosAnimated)
         {
             [_pagingScrollView setContentOffset:CGPointMake(pageFrame.origin.x - PADDING, 0) animated:YES];
@@ -1268,15 +1266,15 @@
     // Cancel any timers
     [self cancelControlHiding];
     
-//    if (self.wantsFullScreenLayout) {
-//        // Status Bar
-//        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-//            //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-//            [UIView animateWithDuration:0.3 animations:^(void) {
-//                [self setNeedsStatusBarAppearanceUpdate];
-//            } completion:^(BOOL finished) {}];
-//        }
-//    }
+    //    if (self.wantsFullScreenLayout) {
+    //        // Status Bar
+    //        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+    //            //[self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    //            [UIView animateWithDuration:0.3 animations:^(void) {
+    //                [self setNeedsStatusBarAppearanceUpdate];
+    //            } completion:^(BOOL finished) {}];
+    //        }
+    //    }
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     

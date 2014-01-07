@@ -97,7 +97,7 @@
 
 // Get and display image
 - (void)displayImage {
-	if (_photo && _photoImageView.image == nil) {
+	if (_photo) {
 		// Reset
 		self.maximumZoomScale = 1;
 		self.minimumZoomScale = 1;
@@ -110,7 +110,11 @@
 		if (img) {
             // Hide ProgressView
             //_progressView.alpha = 0.0f;
-            [_progressView removeFromSuperview];
+            
+            if ([_photo underlyingImage]) {
+                
+                [_progressView removeFromSuperview];
+            }
             
             // Set image
 			_photoImageView.image = img;
@@ -123,7 +127,7 @@
             
 			_photoImageView.frame = photoImageViewFrame;
 			self.contentSize = photoImageViewFrame.size;
-
+            
 			// Set zoom to minimum zoom
 			[self setMaxMinZoomScalesForCurrentBounds];
         } else {
@@ -139,7 +143,7 @@
 
 - (void)setProgress:(CGFloat)progress forPhoto:(IDMPhoto*)photo {
     IDMPhoto *p = (IDMPhoto*)self.photo;
-
+    
     if ([photo.photoURL.absoluteString isEqualToString:p.photoURL.absoluteString]) {
         if (_progressView.progress < progress) {
             [_progressView setProgress:progress animated:YES];
@@ -193,7 +197,7 @@
     
 	// Reset position
 	_photoImageView.frame = CGRectMake(0, 0, _photoImageView.frame.size.width, _photoImageView.frame.size.height);
-	[self setNeedsLayout];    
+	[self setNeedsLayout];
 }
 
 #pragma mark - Layout
@@ -276,7 +280,7 @@
 }
 
 // Image View
-- (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch { 
+- (void)imageView:(UIImageView *)imageView singleTapDetected:(UITouch *)touch {
     [self handleSingleTap:[touch locationInView:imageView]];
 }
 - (void)imageView:(UIImageView *)imageView doubleTapDetected:(UITouch *)touch {
