@@ -250,7 +250,7 @@
     
     // Gesture Began
     if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateBegan) {
-        [self setControlsHidden:YES animated:YES permanent:YES];
+//        [self setControlsHidden:YES animated:YES permanent:YES];
         
         firstX = [scrollView center].x;
         firstY = [scrollView center].y;
