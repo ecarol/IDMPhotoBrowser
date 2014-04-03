@@ -91,6 +91,8 @@
 
 - (void)updatePageControl;
 
+- (void)setControlsHidden:(BOOL)hidden animated:(BOOL)animated permanent:(BOOL)permanent;
+
 // Change Sender View
 //- (void)setSenderViewForAnimation:(UIView*)senderView;
 

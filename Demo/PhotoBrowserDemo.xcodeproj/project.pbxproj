@@ -495,13 +495,15 @@
 			baseConfigurationReference = 9E083157A36B416EACD81DD2 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Wenwei Ge (R5UXY982T7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wenwei Ge (R5UXY982T7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBrowserDemo/PhotoBrowserDemo-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "PhotoBrowserDemo/PhotoBrowserDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CA471838-57BB-4188-BCFF-12D7210D334F";
+				PROVISIONING_PROFILE = "3B584FFD-AAFB-4D25-B45C-1E0D3618AC57";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../**";
 				WRAPPER_EXTENSION = app;
@@ -513,13 +515,15 @@
 			baseConfigurationReference = 9E083157A36B416EACD81DD2 /* Pods.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Wenwei Ge (R5UXY982T7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wenwei Ge (R5UXY982T7)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBrowserDemo/PhotoBrowserDemo-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "PhotoBrowserDemo/PhotoBrowserDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CA471838-57BB-4188-BCFF-12D7210D334F";
+				PROVISIONING_PROFILE = "3B584FFD-AAFB-4D25-B45C-1E0D3618AC57";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../**";
 				WRAPPER_EXTENSION = app;
