@@ -139,7 +139,7 @@ caption = _caption;
             
             [[SDWebImageManager sharedManager] downloadWithURL:_photoURL
                                                        options:SDWebImageRetryFailed
-                                                      progress:^(NSUInteger receivedSize, long long expectedSize) {
+                                                      progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                 
                 float progress = receivedSize / (expectedSize + 0.0f);
                 if (self.progressUpdateBlock) {
