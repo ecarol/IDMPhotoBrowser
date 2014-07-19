@@ -1321,7 +1321,7 @@
     
     if ([self areControlsHidden]) {
         
-		_controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(showControls) userInfo:nil repeats:NO];
+		_controlVisibilityTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(showControls) userInfo:nil repeats:NO];
 	}
 }
 
