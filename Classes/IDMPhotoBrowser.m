@@ -752,7 +752,7 @@
     _performingLayout = YES;
     
 	// Setup pages
-    [_visiblePages removeAllObjects];
+    // [_visiblePages removeAllObjects];  修复原版显示重叠bug
     [_recycledPages removeAllObjects];
     
     // Toolbar
