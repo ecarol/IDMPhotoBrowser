@@ -438,7 +438,10 @@
      } completion:^(BOOL finished) {}];
      }*/
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0) {
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    }
     
     /*if (self.wantsFullScreenLayout && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
      [[UIApplication sharedApplication] setStatusBarStyle:_previousStatusBarStyle animated:YES];
